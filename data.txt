@@ -1,0 +1,29 @@
+Name: John Doe
+Contact Number: 123-456-7890
+Email Address: johndoe@example.com
+Address: 123 Main St, Apartment 4B, Springfield, IL 62704
+
+Name: Jane Smith
+Contact Number: 987-654-3210
+Email Address: janesmith@samplemail.com
+Address: 456 Oak Avenue, Suite 12, San Francisco, CA 94123
+
+Name: Michael Johnson
+Contact Number: 555-123-4567
+Email Address: michael.johnson@maildomain.org
+Address: 789 Pine Blvd, Unit 18, Miami, FL 33101
+
+Name: Emily Davis
+Contact Number: 222-333-4444
+Email Address: emilydavis@myemail.com
+Address: 101 River Rd, Apt 6C, Austin, TX 73301
+
+Name: Robert Brown
+Contact Number: 444-555-6666
+Email Address: rbrown78@webmail.net
+Address: 321 Birch Ln, Floor 5, Seattle, WA 98104
+
+Name: Olivia Wilson
+Contact Number: 666-777-8888
+Email Address: olivia.wilson@domainmail.com
+Address: 654 Cedar St, Building 10, New York, NY 10001

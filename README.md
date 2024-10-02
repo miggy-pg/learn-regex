@@ -9,7 +9,7 @@
 \s      - Whitespace (space, tab, newline)
 \S      - Not Whitespace (space, tab, newline)
 
-\b      - Word Boundary
+\b      - Word Boundary(are indicated by whitespace or alpha numeric numbers)
 \B      - Not a Word Boundary
 ^       - Beginning of a String
 $       - End of a String
@@ -78,4 +78,43 @@ for match in matches:
 ## Escaping Characters
 
 We can escape characters by using the backslash **`\`**
-\*\*
+
+```python
+import re
+
+text = "You can reach us at 123-456-7890 or at 987.654.3210 for assistance."
+search_pattern = re.compile(r'\d\d\d.\d\d\d.\d\d\d\d')
+
+matches = search_pattern.finditer(text)
+for match in matches:
+  print(match)
+
+# Output:
+# 123-456-7890
+# 987.654.3210
+
+# 123-456-7890 will match because it consists of three digits, followed by a hyphen, three more digits, another hyphen, and four digits.
+# 987.654.3210 will also match because it follows the same format but with periods as separators.
+
+```
+
+## Using Character Set
+
+```python
+import re
+
+# Before
+search_pattern = re.compile(r'\d\d\d.\d\d\d.\d\d\d\d')
+
+# After (added a period & dash inside a square bracket)
+# This will only match characters inside the square bracket (see other matches characters in our attached snippet above)
+search_pattern = re.compile(r'\d\d\d[-.]\d\d\d[-.]\d\d\d\d')
+
+with open("data.txt", "r") as f:
+  content = f.read()
+
+  matched_contents = search_pattern.finditer(content)
+  for matched_content in matched_contents:
+    print("Matched Content: ", matched_content)
+
+```

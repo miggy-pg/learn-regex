@@ -205,9 +205,158 @@ corey-321-schafery@my-work.net
 """
 
 pattern = re.compile(r"[a-zA-Z]+@[a-zA-Z]+\.com")
+# Output:
+# CoreyMSchafer@gmail.com
+
+# We have added a period to the first bracket quantifier since the 2nd email has a period
+pattern = re.compile(r"[a-zA-Z.]+@[a-zA-Z]+\.(com|edu)")
+# Output:
+# CoreyMSchafer@gmail.com
+# corey.schafer@university.edu
+
+pattern = re.compile(r"[a-zA-Z0-9.-]+@[a-zA-Z-]+\.(com|edu|net)")
+# Output:
+# CoreyMSchafer@gmail.com
+# corey.schafer@university.edu
+# corey-321-schafery@my-work.net
 
 ```
 
 - "[a-zA-Z]+" ensures that there is at least one letter in the username and the domain name.
 - "[a-zA-Z]+" before the **@** and after the **@** means that both the username and domain must contain one or more letters. So, this pattern requires at least one letter before the **@** and after it.
 - If there are no letters (like @.com), it will not match because the **+** enforces at least one character.
+
+```python
+import re
+
+urls = """
+https://www.google.com
+http://coreyms.com
+https://youtube.com
+https://www.nasa.gov
+
+"""
+
+# The good thing about this is there the characters are inside a group and we can access this
+pattern = re.compile(r"https?://(www\.)?(\w+)(\.\w+)")
+
+matches = pattern.finditer(urls)
+
+
+# Group 0 is the entire collected string
+# ------ Based on our 'urls' string example with a 'group' quantifier used in our pattern, we can collect the following
+# Group 1 = www or None
+# Group 2 = the domain name
+# Group 3 = the top-level domain
+for match in matches:
+  print(match.group(0))
+
+```
+
+## Substitutions
+
+```python
+urls = """
+https://www.google.com
+http://coreyms.com
+https://youtube.com
+https://www.nasa.gov
+
+"""
+
+# The good thing about this is there the characters are inside a group and we can access this
+pattern = re.compile(r"https?://(www\.)?(\w+)(\.\w+)")
+# 'sub' will return according to the substitution made. In this case, we want to return the group 2(\w+) and 3(\.\w+)
+subbed_urls = pattern.sub(r"\2\3", urls)
+
+print(subbed_urls)
+
+# Output:
+# google.com
+# coreyms.com
+# youtube.com
+# nasa.gov
+
+```
+
+## findall()
+
+```python
+pattern = re.compile(r"(Mr|Ms|Mrs)\.?\s[A-Z]\w*")
+
+```
+
+- returns and match only that group, in this case "Mr|Ms|Mrs" since this is a group
+- if there are multiple groups, then it will return a list of tuples and the tuples would contains all of the group
+- if there are no groups, then it will return all of the matches in a list of strings
+
+## match()
+
+- This method tries to match the pattern at the start of the string.
+
+```python
+import re
+
+# Example string
+text = "Hello world! This is a test of Regex in Python. hello again!"
+
+# Example pattern: Let's look for the word "hello"
+pattern = r"hello"
+
+# match() checks if the pattern matches **from the beginning** of the string
+
+result = re.match(pattern, text, re.IGNORECASE)
+if result:
+    print(f"match() found: {result.group()} at position {result.start()}-{result.end()}")
+else:
+    print("match() found nothing.")a
+
+# Output: match() found nothing.
+
+```
+
+## search
+
+- search() looks for the first occurrence of the pattern **anywhere in the string**
+- This method scans through the entire string and returns the first match it finds.
+
+```python
+result = re.search(pattern, text, re.IGNORECASE)
+if result:
+    print(f"search() found: {result.group()} at position {result.start()}-{result.end()}")
+else:
+    print("search() found nothing.")
+
+# Output: search() found: Hello at position 0-5
+
+```
+
+## findall
+
+- findall() returns **all matches** in the string
+- This method returns all matches of the pattern in the string as a list.
+
+```python
+
+results = re.findall(pattern, text, re.IGNORECASE)
+print(f"findall() found: {results}")
+
+# Output: findall() found: ['Hello', 'hello']
+
+### 4. Using `search()` with multiple flags
+# Multiple flags can be combined using the `|` (OR) operator
+
+# re.DOTALL makes the dot (.) match newlines as well
+multi_flag_pattern = r"hello.*again"
+multi_flag_result = re.search(multi_flag_pattern, text, re.IGNORECASE | re.DOTALL)
+
+if multi_flag_result:
+    print(f"search() with multiple flags found: {multi_flag_result.group()}")
+else:
+    print("search() with multiple flags found nothing.")
+
+# Output: search() with multiple flags found: Hello world! This is a test of Regex in Python. hello again
+
+```
+
+Flags: Flags like re.IGNORECASE (for case-insensitivity) and re.DOTALL (to make . match newlines) can be used to modify the behavior of regex matching.

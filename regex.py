@@ -47,9 +47,23 @@ corey.schafer@university.edu
 corey-321-schafery@my-work.net
 """
 
-pattern = re.compile(r"[a-zA-Z]+@[a-zA-Z]+\.com")
+pattern = re.compile(r"[a-zA-Z0-9.-]+@[a-zA-Z-]+\.(com|edu|net)")
 
 matches = pattern.finditer(emails)
+
+# for match in matches:
+#   print(match)
+
+urls = """
+https://www.google.com
+http://coreyms.com
+https://youtube.com
+https://www.nasa.gov
+
+"""
+pattern = re.compile(r"https?://(www\.)?(\w+)(\.\w+)")
+
+matches = pattern.finditer(urls)
 
 for match in matches:
   print(match)
